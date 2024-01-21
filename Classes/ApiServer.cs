@@ -8,6 +8,7 @@ using WatsonWebserver.Lite;
 using WatsonWebserver.Lite.Extensions.HostBuilderExtension;
 
 namespace RestAPI {
+
     internal class ApiServer {
         internal const string DefaultIp = "0.0.0.0";
         private static readonly ILogger logger = LogManager.GetLogger();
@@ -33,7 +34,7 @@ namespace RestAPI {
             logger.Info("API server stopped!");
         }
 
-        async static Task DefaultRoute(HttpContextBase ctx) {
+        private static async Task DefaultRoute(HttpContextBase ctx) {
             try {
                 await ctx.Response.Send(new Responses.Default("playnite rest api server").ToJson());
             } catch (Exception e) {
@@ -41,7 +42,7 @@ namespace RestAPI {
             }
         }
 
-        async static Task GetGameRoute(HttpContextBase ctx) {
+        private static async Task GetGameRoute(HttpContextBase ctx) {
             try {
                 var id = ctx.Request.Url.Parameters["id"];
                 var games = playniteAPI.Database.Games.Where(g => g.Id.ToString() == id).Union(playniteAPI.Database.Games.Where(g => g.GameId == id));
@@ -50,14 +51,16 @@ namespace RestAPI {
                 logger.Error(e, "GetGameRoute");
             }
         }
-        async static Task GetGamesRoute(HttpContextBase ctx) {
+
+        private static async Task GetGamesRoute(HttpContextBase ctx) {
             try {
                 await ctx.Response.Send(JsonSerializer.Serialize(playniteAPI.Database.Games));
             } catch (Exception e) {
                 logger.Error(e, "GetGamesRoute");
             }
         }
-        async static Task GetSourcesRoute(HttpContextBase ctx) {
+
+        private static async Task GetSourcesRoute(HttpContextBase ctx) {
             try {
                 await ctx.Response.Send(JsonSerializer.Serialize(playniteAPI.Database.Sources));
             } catch (Exception e) {

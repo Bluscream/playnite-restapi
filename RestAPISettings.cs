@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 
 namespace RestAPI {
+
     public class RestAPISettings : ObservableObject {
         private string host_address = ApiServer.DefaultIp;
         private short host_port = 9000;
@@ -17,6 +18,7 @@ namespace RestAPI {
         private RestAPISettings editingClone { get; set; }
 
         private RestAPISettings settings;
+
         public RestAPISettings Settings {
             get => settings;
             set {

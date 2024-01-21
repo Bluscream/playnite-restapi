@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace RestAPI {
+
     public class RestAPI : GenericPlugin {
         private static readonly ILogger logger = LogManager.GetLogger();
         public override Guid Id { get; } = Guid.Parse("2fae73fa-6abd-4bbd-b8de-e0f2d7787bcd");

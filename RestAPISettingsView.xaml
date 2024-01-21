@@ -6,9 +6,9 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
-        <TextBlock Text="Host Address:"/>
-        <TextBox Text="{Binding Settings.Host_Address}"/>
-        <TextBlock Text="Host Port:"/>
-        <TextBox Text="{Binding Settings.Host_Port}"/>
+        <TextBlock Text="Host Address:" />
+        <TextBox Text="{Binding Settings.Host_Address}" />
+        <TextBlock Text="Host Port:" />
+        <TextBox Text="{Binding Settings.Host_Port}" />
     </StackPanel>
 </UserControl>
