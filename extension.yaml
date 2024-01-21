@@ -1,0 +1,7 @@
+﻿Id: RestAPI_2fae73fa-6abd-4bbd-b8de-e0f2d7787bcd
+Name: "Rest API"
+Author: "Bluscream"
+Version: 1.0
+Module: RestAPI.dll
+Type: GenericPlugin
+Icon: icon.png
