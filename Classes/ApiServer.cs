@@ -1,7 +1,6 @@
 ﻿using Playnite.SDK;
 using System;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using WatsonWebserver.Core;
 using WatsonWebserver.Lite;
@@ -20,6 +19,7 @@ namespace RestAPI {
             server = new HostBuilder(ip, port, false, DefaultRoute)
                 .MapStaticRoute(HttpMethod.GET, "/games", GetGamesRoute)
                 .MapStaticRoute(HttpMethod.GET, "/sources", GetSourcesRoute)
+                .MapStaticRoute(HttpMethod.GET, "/companies", GetCompaniesRoute)
                 .MapParameteRoute(HttpMethod.GET, "/game/{id}", GetGameRoute)
             .Build();
             playniteAPI = _playniteApi;
@@ -46,7 +46,7 @@ namespace RestAPI {
             try {
                 var id = ctx.Request.Url.Parameters["id"];
                 var games = playniteAPI.Database.Games.Where(g => g.Id.ToString() == id).Union(playniteAPI.Database.Games.Where(g => g.GameId == id));
-                await ctx.Response.Send(JsonSerializer.Serialize(games));
+                await ctx.Response.Send(games.ToJson());
             } catch (Exception e) {
                 logger.Error(e, "GetGameRoute");
             }
@@ -54,7 +54,7 @@ namespace RestAPI {
 
         private static async Task GetGamesRoute(HttpContextBase ctx) {
             try {
-                await ctx.Response.Send(JsonSerializer.Serialize(playniteAPI.Database.Games));
+                await ctx.Response.Send(playniteAPI.Database.Games.ToJson());
             } catch (Exception e) {
                 logger.Error(e, "GetGamesRoute");
             }
@@ -62,9 +62,17 @@ namespace RestAPI {
 
         private static async Task GetSourcesRoute(HttpContextBase ctx) {
             try {
-                await ctx.Response.Send(JsonSerializer.Serialize(playniteAPI.Database.Sources));
+                await ctx.Response.Send(playniteAPI.Database.Sources.ToJson());
             } catch (Exception e) {
                 logger.Error(e, "GetSourcesRoute");
+            }
+        }
+
+        private static async Task GetCompaniesRoute(HttpContextBase ctx) {
+            try {
+                await ctx.Response.Send(playniteAPI.Database.Companies.ToJson());
+            } catch (Exception e) {
+                logger.Error(e, "GetCompaniesRoute");
             }
         }
     }
